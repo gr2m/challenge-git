@@ -3,6 +3,7 @@
 ---
 
 hey this is @gr2m!
+And @DavidGuttman!
 
 # Outlier Engineering Git Challenge
 
