@@ -1,18 +1,21 @@
 name: Automatic Rebase
-on:
+"on":
   issue_comment:
-    types: [created]
+    types:
+      - created
 jobs:
   rebase:
     name: Rebase
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+    if: >-
+      github.event.issue.pull_request != '' &&
+      contains(github.event.comment.body, '/rebase')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+          fetch-depth: 0
       - name: Automatic Rebase
         uses: cirrus-actions/rebase@1.4
         env:
@@ -23,7 +26,7 @@ jobs:
           owner: ${{ github.event.repository.owner.login }}
           repo: ${{ github.event.repository.name }}
           issue_number: ${{ github.event.issue.number }}
-          body: "sorry, you'll have to rebase the pull request yourself."
+          body: sorry, you'll have to rebase the pull request yourself.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: failure()
